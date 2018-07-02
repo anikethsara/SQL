@@ -1,0 +1,82 @@
+Playing around with Postgresql queries for Analysis.
+
+1)SELECT customer_id,round(avg(amount),3) FROM Payment group by customer_id Order by customer_id ASC;
+
+2)SELECT count(*) as HOW_MANY_FILMS, rating FROM film Group by rating
+
+3)select rental_duration,COUNT(rental_duration) from FILM Group by rental_duration;
+
+4)SELECT store_id, count(customer_id) from customer group by store_id having count(customer_id) > 280
+
+5)SELECT rating,round(AVG(rental_rate),3) FROM film WHERE rating IN ('R','G','PG') group by rating HAVING avg(rental_rate)>2.91
+
+#Challenge
+
+6)SELECT * from Payment;
+
+7)SELECT customer_id, count(payment_id) as Number_of_Payments from payment group by customer_id having count(payment_id)>=40
+
+8)SELECT rating, avg(rental_duration) from film group by rating having avg(rental_duration) > 5 ;
+
+
+9)SELECT customer_id, sum(amount) from payment  where staff_id = 2 group by customer_id Having sum(amount)>110
+
+select * from payment;
+
+select * from film;
+
+10)select count(title) from film where title LIKE 'J%'
+
+11)select * from customer LIMIT 2
+
+12)select first_name,last_name from customer where first_name LIKE 'E%' and address_id < 500 order by customer_id DESC LIMIT 1;
+
+#Joins
+
+select * from customer;
+
+13)SELECT customer.customer_id,first_name, last_name, email, sum(amount from customer INNER JOIN payment ON customer.customer_id = payment.customer_id where amount > 3.00 group;
+															  
+14)select payment_id,amountfirst_name,last_name FROM payment JOIN staff ON payment.staff_id = staff.staff_id; 			
+															  
+select * from Inventory;
+
+select * from  film;	
+
+15)select title, count(title) as Num_of_Copies from inventory INNER JOIN film on Inventory.film_id = film.film_id  group by title Having count(title)<3
+select * from film;	
+select * from language;	
+
+16)select title, name as Movie_Language from film fl 
+join language ln 
+on ln.language_id = fl.language_id 	
+
+select * from film LIMIT 5;		
+
+select * from inventory LIMIT 5
+
+17)select film.film_id, film.title, inventory.film_id, inventory_id
+from film left outer join inventory on inventory.film_id = film.film_id 
+where inventory.film_id is NULL Order by title
+
+18)Select sum(amount) as profit, extract (month from payment_date) as month_of_payment from payment group by month_of_payment
+select * from payment
+
+19)select round(AVG(amount),2) as new_id from Payment 
+
+20)select first_name || ' '  || last_name as FullName, char_length(first_name || ' '  || last_name) as length_of_name from customer;
+
+21)select title,rental_rate from film where rental_rate > (select round(avg(rental_rate),3) from film) Order by rental_rate ASC;
+
+select * from rental;
+
+
+22)select title,film.film_id from film where film_id IN (Select film_id from inventory inner join rental on inventory.inventory_id = rental.inventory_id 
+where rental.return_date BETWEEN date '2005-05-29' and date '2005-05-30') 
+
+select * from customer Limit 2
+
+23)select c1.customer_id, c1.first_name, c1.last_name,c2.first_name,c2.last_name from customer as c1 
+Left JOIN customer as c2 ON c1.first_name = c2.last_name 
+
+24)SELECT rating, round(avg(rental_rate),2) from film group by rating having avg(rental_rate) > 3
