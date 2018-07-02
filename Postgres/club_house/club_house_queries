@@ -1,0 +1,49 @@
+select * from cd.facilities;
+
+select name,membercost from cd.facilities;
+
+select name from cd.facilities where membercost>0
+
+select facid, name, membercost, monthlymaintenance from cd.facilities where membercost > 0 and membercost < (0.02*monthlymaintenance)
+
+select name from cd.facilities where name LIKE '%Tennis%'
+
+select * from cd.facilities where facid IN (1,5)
+
+select memid,surname,firstname,joindate from cd.members where joindate >= date'2012-09-01'
+
+select distinct(surname) from cd.members order by surname LIMIT 10
+
+select joindate from cd.members order by joindate DESC LIMIT 1;
+
+select count(*) from cd.facilities where guestcost >= 10;
+
+select facid,sum(slots) as Total_Slots from cd.bookings where extract(month from starttime) = 09 group by facid order by Total_Slots 
+
+select facid,sum(slots) as Total_Slots from cd.bookings group by facid having sum(slots) > 1000 order by facid 
+
+select starttime,name from cd.bookings 
+INNER JOIN cd.facilities on cd.bookings.facid = cd.facilities.facid 
+where (name LIKE '%Tennis Court%') and (starttime BETWEEN date '2012-09-21' and  date '2012-09-22');
+
+select * from cd.facilities
+select * from cd.members
+
+select starttime,firstname,surname from cd.bookings join cd.members on cd.bookings.memid = cd.members.memid 
+where surname = 'Farrell' and firstname = 'David' 
+
+select * from cd.facilities
+select * from cd.members
+
+select * from cd.bookings where memid = 0 and facid = 6 and (starttime between date '2012-09-25' and date '2012-09-26')
+
+select (firstname || ' ' || surname) as fullName, telephone,facid from cd.members 
+join cd.bookings on cd.members.memid = cd.bookings.memid where facid = 6 and 
+(starttime between date '2012-09-25' and date '2012-09-26')
+
+#Which facility has got highest bookings in the month of August
+
+select name, count(cd.facilities.facid) as no_of_bookings 
+from cd.facilities join cd.bookings on cd.facilities.facid = cd.bookings.facid 
+where extract(month from starttime) = 8 group by cd.facilities.facid 
+order by no_of_bookings DESC LIMIT 1
